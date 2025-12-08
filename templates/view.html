@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For {{ blush.recipient_name }} ✨</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* --- Reset & Core --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            background: #0f0c29;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* --- Background Orbs --- */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.6;
+            animation: floatOrb 10s infinite alternate;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: #ff00cc;
+            top: -50px;
+            left: -50px;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: #3333ff;
+            bottom: -100px;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        @keyframes floatOrb {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(30px, 50px);
+            }
+        }
+
+        /* --- Canvas for Stars & Confetti --- */
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* --- Glass Card Container --- */
+        .glass-card {
+            position: relative;
+            z-index: 10;
+            padding: 50px 30px;
+            max-width: 650px;
+            width: 90%;
+            min-height: 400px;
+
+            /* Glassmorphism Effect */
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        /* --- Button --- */
+        #open-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 20px 45px;
+            font-size: 1.6rem;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-family: 'Dancing Script', cursive;
+            letter-spacing: 1px;
+            outline: none;
+        }
+
+        #open-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        /* --- Text Area --- */
+        #message-area {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 200px;
+            /* Fixed height to keep layout stable */
+            position: relative;
+        }
+
+        #text-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .text-line {
+            font-size: 1.8rem;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            /* Smooth Fade Transition */
+            position: absolute;
+            /* Stack on top of each other */
+            width: 100%;
+            text-align: center;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            /* Center vertically */
+        }
+
+        .highlight {
+            color: #ffd700;
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .heart {
+            color: #ff4d6d;
+            font-size: 4rem;
+            animation: beat 1.5s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+            display: none;
+            filter: drop-shadow(0 0 10px rgba(255, 77, 109, 0.5));
+            position: absolute;
+        }
+
+        /* --- Animations --- */
+        @keyframes beat {
+            0% {
+                transform: scale(0.95);
+            }
+
+            5% {
+                transform: scale(1.1);
+            }
+
+            39% {
+                transform: scale(0.85);
+            }
+
+            45% {
+                transform: scale(1);
+            }
+
+            60% {
+                transform: scale(0.95);
+            }
+
+            100% {
+                transform: scale(0.9);
+            }
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: -50px;
+            font-size: 20px;
+            color: rgba(255, 150, 180, 0.8);
+            animation: floatUp 8s linear infinite;
+            z-index: 5;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 600px) {
+            .glass-card {
+                padding: 30px 20px;
+                min-height: 350px;
+            }
+
+            .text-line {
+                font-size: 1.3rem;
+            }
+
+            .highlight {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+    <script>
+        // Apply Theme Config immediately to avoid flash
+        const themeConfig = {{ blush.theme_config | safe }};
+        if (themeConfig && themeConfig.background) {
+            document.body.style.background = themeConfig.background;
+        }
+        if (themeConfig && themeConfig.orb1) {
+            document.documentElement.style.setProperty('--orb1-bg', themeConfig.orb1);
+        }
+        if (themeConfig && themeConfig.orb2) {
+            document.documentElement.style.setProperty('--orb2-bg', themeConfig.orb2);
+        }
+    </script>
+    <style>
+        :root {
+            --orb1-bg: #ff00cc;
+            --orb2-bg: #3333ff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <canvas id="canvas"></canvas>
+
+    {% if blush.audio_url %}
+    <audio id="bg-music" loop>
+        <source src="{{ blush.audio_url }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    {% endif %}
+
+    <div class="glass-card">
+        <button id="open-btn">A Special Message for {{ blush.recipient_name|title }} 💌</button>
+
+        <div id="message-area">
+            <div id="text-container"></div>
+            <div class="heart" id="final-heart">❤️</div>
+        </div>
+    </div>
+
+    <script>
+        const messages = {{ blush.message_data | safe }};
+
+
+        // Increased delays slightly to account for fade in/out time
+        const delays = [3000, 4000, 3500, 4500, 3500, 3000, 4500, 4000, 4000, 4500, 3000, 5000, 4000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000];
+
+        const btn = document.getElementById('open-btn');
+        const msgArea = document.getElementById('message-area');
+        const textContainer = document.getElementById('text-container');
+        const finalHeart = document.getElementById('final-heart');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // --- Particles System ---
+        let width, height, particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor(isConfetti = false) {
+                this.isConfetti = isConfetti;
+                this.x = Math.random() * width;
+                this.y = isConfetti ? height + Math.random() * 100 : Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 2;
+                this.vy = isConfetti ? -(Math.random() * 10 + 5) : (Math.random() - 0.5) * 0.5;
+                this.size = isConfetti ? Math.random() * 8 + 4 : Math.random() * 2;
+                this.color = isConfetti ? `hsl(${Math.random() * 360}, 100%, 75%)` : 'rgba(255,255,255,0.8)';
+                this.gravity = isConfetti ? 0.2 : 0;
+                this.rotation = Math.random() * 360;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.isConfetti) {
+                    this.vy += this.gravity;
+                    this.rotation += 5;
+                    this.size *= 0.99;
+                } else {
+                    if (this.x < 0) this.x = width;
+                    if (this.x > width) this.x = 0;
+                    if (this.y < 0) this.y = height;
+                    if (this.y > height) this.y = 0;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                if (this.isConfetti) ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.fillStyle = this.color;
+
+                if (this.isConfetti) {
+                    ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 100; i++) particles.push(new Particle(false));
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.update();
+                p.draw();
+                if (p.isConfetti && p.size < 0.5) particles.splice(i, 1);
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        function explodeConfetti() {
+            for (let i = 0; i < 150; i++) particles.push(new Particle(true));
+        }
+
+        function createFloatingHearts() {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerHTML = Math.random() > 0.5 ? '❤️' : '✨';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 5 + 's';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 8000);
+        }
+
+        // --- Interaction Logic ---
+        btn.addEventListener('click', () => {
+            const audio = document.getElementById('bg-music');
+            if (audio) audio.play().catch(e => console.log("Audio play failed (user interaction needed usually):", e));
+
+            btn.style.transform = "scale(0)";
+            setTimeout(() => { btn.style.display = "none"; }, 400);
+
+            explodeConfetti();
+            setInterval(createFloatingHearts, 600);
+
+            msgArea.style.display = "flex";
+            playMessageSequence(0);
+        });
+
+        function playMessageSequence(index) {
+            // Remove previous message if exists
+            const existingLine = textContainer.querySelector('.text-line');
+
+            if (existingLine) {
+                // Fade out old message
+                existingLine.style.opacity = "0";
+                setTimeout(() => {
+                    existingLine.remove();
+                    // Call next message after old one is gone
+                    showNextLine(index);
+                }, 1500); // Wait 1.5s for fade out
+            } else {
+                showNextLine(index);
+            }
+        }
+
+        function showNextLine(index) {
+            if (index >= messages.length) {
+                finalHeart.style.display = "block";
+                return;
+            }
+
+            const p = document.createElement('p');
+            p.classList.add('text-line');
+            p.innerHTML = messages[index];
+            textContainer.appendChild(p);
+
+            // Force reflow
+            void p.offsetWidth;
+
+            // Fade In
+            p.style.opacity = "1";
+
+            // Schedule next cycle
+            setTimeout(() => {
+                playMessageSequence(index + 1);
+            }, delays[index]);
+        }
+    </script>
+</body>
+
+</html>

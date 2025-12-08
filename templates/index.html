@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Zahra ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Blushy 🤭 - Create Yours</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500;700&display=swap"
+        rel="stylesheet">
     <style>
         /* --- Reset & Core --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html {
-            width: 100%; height: 100%;
-            overflow: hidden;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            width: 100%;
+            min-height: 100vh;
+            /* Allow growing */
+            /* overflow: hidden;  <-- REMOVED to allow scrolling */
             font-family: 'Poppins', sans-serif;
             background: #0f0c29;
             background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
@@ -19,358 +30,383 @@
             justify-content: center;
             align-items: center;
             text-align: center;
+            padding: 20px;
+            /* Add padding to body for mobile edges */
         }
 
         /* --- Background Orbs --- */
         .orb {
-            position: absolute;
+            position: fixed;
+            /* Fixed so they stay put while scrolling */
             border-radius: 50%;
             filter: blur(80px);
             z-index: 0;
             opacity: 0.6;
             animation: floatOrb 10s infinite alternate;
         }
-        .orb-1 { width: 300px; height: 300px; background: #ff00cc; top: -50px; left: -50px; }
-        .orb-2 { width: 400px; height: 400px; background: #3333ff; bottom: -100px; right: -100px; animation-delay: -5s; }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: #ff00cc;
+            top: -50px;
+            left: -50px;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: #3333ff;
+            bottom: -100px;
+            right: -100px;
+            animation-delay: -5s;
+        }
 
         @keyframes floatOrb {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(30px, 50px); }
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(30px, 50px);
+            }
         }
 
-        /* --- Canvas for Stars & Confetti --- */
-        #canvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* --- Glass Card Container --- */
+        /* --- Glass Card --- */
         .glass-card {
             position: relative;
             z-index: 10;
-            padding: 50px 30px;
-            max-width: 650px;
-            width: 90%;
-            min-height: 400px;
-            
-            /* Glassmorphism Effect */
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 24px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: transform 0.3s ease;
+            text-align: left;
+            margin: 20px 0;
+            /* Vertical space */
         }
 
-        /* --- Button --- */
-        #open-btn {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 20px 45px;
-            font-size: 1.6rem;
-            color: white;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            font-family: 'Dancing Script', cursive;
-            letter-spacing: 1px;
-            outline: none;
-        }
-
-        #open-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
-        }
-
-        /* --- Text Area --- */
-        #message-area {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 200px; /* Fixed height to keep layout stable */
-            position: relative;
-        }
-
-        #text-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        .text-line {
-            font-size: 1.8rem;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out; /* Smooth Fade Transition */
-            position: absolute; /* Stack on top of each other */
-            width: 100%;
-            text-align: center;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%); /* Center vertically */
-        }
-        
-        .highlight {
-            color: #ffd700;
+        h1 {
             font-family: 'Dancing Script', cursive;
             font-size: 3rem;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            margin-bottom: 5px;
+            background: -webkit-linear-gradient(#fff, #f0f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
         }
 
-        .heart {
-            color: #ff4d6d;
-            font-size: 4rem;
-            animation: beat 1.5s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
-            display: none;
-            filter: drop-shadow(0 0 10px rgba(255, 77, 109, 0.5));
-            position: absolute;
+        p.subtitle {
+            text-align: center;
+            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
         }
 
-        /* --- Animations --- */
-        @keyframes beat {
-            0% { transform: scale(0.95); }
-            5% { transform: scale(1.1); }
-            39% { transform: scale(0.85); }
-            45% { transform: scale(1); }
-            60% { transform: scale(0.95); }
-            100% { transform: scale(0.9); }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #eee;
+            margin-left: 5px;
         }
 
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 18px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            resize: none;
+            /* Disable manual resize for clean look */
         }
 
-        .floating-heart {
-            position: absolute;
-            bottom: -50px;
-            font-size: 20px;
-            color: rgba(255, 150, 180, 0.8);
-            animation: floatUp 8s linear infinite;
-            z-index: 5;
-            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+        input:focus,
+        textarea:focus,
+        select:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #ff00cc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 0, 204, 0.1);
         }
 
+        /* Select dropdown styling fix */
+        option {
+            background: #24243e;
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(45deg, #ff00cc, #3333ff);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #result-link {
+            display: block;
+            margin: 15px 0;
+            color: #ff00cc;
+            text-decoration: none;
+            word-break: break-all;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        /* --- Mobile Optimization --- */
         @media (max-width: 600px) {
-            .glass-card { padding: 30px 20px; min-height: 350px; }
-            .text-line { font-size: 1.3rem; }
-            .highlight { font-size: 2.2rem; }
+            .glass-card {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            input,
+            textarea,
+            select {
+                padding: 12px;
+                font-size: 16px;
+                /* prevent zoom */
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
-    <canvas id="canvas"></canvas>
 
     <div class="glass-card">
-        <button id="open-btn">A Special Message for Vee 💌</button>
+        <h1>Blushy 🤭</h1>
+        <p class="subtitle">Craft a magical moment.</p>
 
-        <div id="message-area">
-            <div id="text-container"></div>
-            <div class="heart" id="final-heart">❤️</div>
+        <form id="create-form">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+
+            <!-- Step 1: Who is it for? -->
+            <div class="step active-step" id="step-1">
+                <label>Who is this for?</label>
+                <input type="text" id="recipient" placeholder="e.g. Vee, Mom, My Crush..." required>
+                <div class="nav-btns">
+                    <button type="button" class="next-btn" onclick="nextStep(1)">Next ➝</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Messages -->
+            <div class="step" id="step-2">
+                <label>Your Messages (One per line)</label>
+                <textarea id="messages" rows="6" placeholder="Hey you...&#10;I wanted to say...&#10;Happy Birthday! ❤️"
+                    required></textarea>
+                <div class="nav-btns">
+                    <button type="button" class="back-btn" onclick="prevStep(2)">← Back</button>
+                    <button type="button" class="next-btn" onclick="nextStep(2)">Next ➝</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Music -->
+            <div class="step" id="step-3">
+                <label>Background Music URL (Optional)</label>
+                <input type="url" id="audio-url" placeholder="https://example.com/song.mp3">
+                <div class="nav-btns">
+                    <button type="button" class="back-btn" onclick="prevStep(3)">← Back</button>
+                    <button type="button" class="next-btn" onclick="nextStep(3)">Next ➝</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Vibe -->
+            <div class="step" id="step-4">
+                <label>Choose a Vibe ✨</label>
+                <select id="theme-select">
+                    <option value="default">Default (Cosmic Purple)</option>
+                    <option value="sunset">Sunset (Warm & Romantic)</option>
+                    <option value="galaxy">Galaxy (Deep & Teal)</option>
+                    <option value="ocean">Ocean (Calm Blue)</option>
+                </select>
+                <div class="nav-btns">
+                    <button type="button" class="back-btn" onclick="prevStep(4)">← Back</button>
+                    <button type="submit" id="submit-btn">Create ✨</button>
+                </div>
+            </div>
+        </form>
+
+        <div id="result-area">
+            <p>Your Blush is ready! Share this link:</p>
+            <a id="result-link" href="#" target="_blank">...</a>
+            <button id="copy-btn" type="button"
+                style="margin-top: 10px; background: rgba(255,255,255,0.1); font-size: 0.9rem;">Copy Link</button>
+            <button id="restart-btn" type="button" onclick="location.reload()"
+                style="margin-top: 10px; background: rgba(255,255,255,0.05); font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.2);">Make
+                Another ↻</button>
         </div>
     </div>
 
     <script>
-        const messages = [
-            "Hellow!, Birthday Girl 🌙",
-            "I wanted to wish you in a very unique way. 💻✨",
-            "I was panic-Googling 'Best Gifts for Vee'...",
-            "But Google just said: 'She's already perfect, good luck buddy.' 🤷‍♂️😂",
-            "So I thought about getting you a mirror...",
-            "But that seemed dangerous...",
-            "You might get lost staring at something so beautiful. 😉",
-            "Happy Birthday, <span class='highlight'>Lav</span>",
-            "May  God bless your heart as much as you bless my life.",
-            "Seriously, stop smiling at the screen, you're making me blush too.",
-            "From yours truly,",
-            "<span class='highlight'>Jeff</span>",
-            "Okay... wacha niache jokes😂",
-            "Happiest of Birthdays to the most amazing person I know! 🎉🎂",
-            "Vee I don’t know what you think you’re doing to me",
-            " but every time I see ur text",
-            "my whole mood just melts in the best way.",
-            "You’ve got this gentle kind of magic that makes me smile and...",
-            "wuehhhhhh…😂 wacha tu nisifungue roho",
-            "Just so you know…",
-            "every time you talk to me",
-            "my heart does this soft little flip",
-            "like it’s trying to impress you. ❤️‍🔥",
-            "So on your special day,",
-            "I just want to say thank you",
-            "for being you.",
-            "For being the light in my life,",
-            "the joy in my days,",
-            "and the....",
-            "waah nimekua poet😂",
-            "anyway...",
-            "Happy Birthday, Vee! 🎉🎂🎈",
-            "the end. ❤️"
-        ];
+        const themes = {
+            default: { background: "linear-gradient(135deg, #0f0c29, #302b63, #24243e)", orb1: "#ff00cc", orb2: "#3333ff" },
+            sunset: { background: "linear-gradient(135deg, #2c1a2b, #8a2387, #e94057, #f27121)", orb1: "#ff6b6b", orb2: "#feca57" },
+            galaxy: { background: "linear-gradient(to right, #243949 0%, #517fa4 100%)", orb1: "#00f260", orb2: "#0575e6" },
+            ocean: { background: "linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%)", orb1: "#00c6fb", orb2: "#005bea" }
+        };
 
-        // Increased delays slightly to account for fade in/out time
-        const delays = [3000, 4000, 3500, 4500, 3500, 3000, 4500, 4000, 4000, 4500, 3000, 5000,4000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000];
+        let currentStep = 1;
+        const totalSteps = 4;
 
-        const btn = document.getElementById('open-btn');
-        const msgArea = document.getElementById('message-area');
-        const textContainer = document.getElementById('text-container');
-        const finalHeart = document.getElementById('final-heart');
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-
-        // --- Particles System ---
-        let width, height, particles = [];
-        
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+        function updateProgress() {
+            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
         }
-        window.addEventListener('resize', resize);
-        resize();
 
-        class Particle {
-            constructor(isConfetti = false) {
-                this.isConfetti = isConfetti;
-                this.x = Math.random() * width;
-                this.y = isConfetti ? height + Math.random() * 100 : Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 2;
-                this.vy = isConfetti ? -(Math.random() * 10 + 5) : (Math.random() - 0.5) * 0.5;
-                this.size = isConfetti ? Math.random() * 8 + 4 : Math.random() * 2;
-                this.color = isConfetti ? `hsl(${Math.random() * 360}, 100%, 75%)` : 'rgba(255,255,255,0.8)';
-                this.gravity = isConfetti ? 0.2 : 0;
-                this.rotation = Math.random() * 360;
+        function validateStep(step) {
+            if (step === 1) {
+                const val = document.getElementById('recipient').value.trim();
+                if (!val) { alert("Please enter a name!"); return false; }
             }
+            if (step === 2) {
+                const val = document.getElementById('messages').value.trim();
+                if (!val) { alert("Please write a message!"); return false; }
+            }
+            return true;
+        }
 
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                
-                if (this.isConfetti) {
-                    this.vy += this.gravity;
-                    this.rotation += 5;
-                    this.size *= 0.99;
+        function nextStep(step) {
+            if (!validateStep(step)) return;
+
+            // Hide Current
+            const currentEl = document.getElementById('step-' + step);
+            currentEl.classList.remove('active-step');
+            currentEl.style.display = 'none'; // Ensure it's gone
+
+            // Show Next
+            currentStep++;
+            const nextEl = document.getElementById('step-' + currentStep);
+            nextEl.style.display = 'block'; // Prepare for animation
+            setTimeout(() => nextEl.classList.add('active-step'), 10); // Trigger transition
+
+            updateProgress();
+        }
+
+        function prevStep(step) {
+            // Hide Current
+            const currentEl = document.getElementById('step-' + step);
+            currentEl.classList.remove('active-step');
+            currentEl.style.display = 'none';
+
+            // Show Previous
+            currentStep--;
+            const prevEl = document.getElementById('step-' + currentStep);
+            prevEl.style.display = 'block';
+            setTimeout(() => prevEl.classList.add('active-step'), 10);
+
+            updateProgress();
+        }
+
+        document.getElementById('create-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const btn = document.getElementById('submit-btn');
+            const originalText = btn.innerText;
+            btn.innerText = "Creating...";
+            btn.disabled = true;
+
+            const recipient = document.getElementById('recipient').value;
+            const messagesRaw = document.getElementById('messages').value;
+            const audioUrl = document.getElementById('audio-url').value;
+            const themeKey = document.getElementById('theme-select').value;
+
+            // Split by newlines and filter empty lines
+            const messages = messagesRaw.split('\n').filter(line => line.trim() !== '');
+
+            try {
+                const response = await fetch('/api/create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        recipient_name: recipient,
+                        messages: messages,
+                        audio_url: audioUrl || null,
+                        theme_config: themes[themeKey]
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    const fullUrl = window.location.origin + data.url;
+                    const resultArea = document.getElementById('result-area');
+                    const linkEl = document.getElementById('result-link');
+
+                    linkEl.href = fullUrl;
+                    linkEl.innerText = fullUrl;
+
+                    document.getElementById('create-form').style.display = 'none';
+                    resultArea.style.display = 'block';
+
+                    // Copy Functionality
+                    document.getElementById('copy-btn').onclick = () => {
+                        navigator.clipboard.writeText(fullUrl);
+                        document.getElementById('copy-btn').innerText = "Copied!";
+                    };
+
                 } else {
-                    if (this.x < 0) this.x = width;
-                    if (this.x > width) this.x = 0;
-                    if (this.y < 0) this.y = height;
-                    if (this.y > height) this.y = 0;
+                    alert('Error: ' + data.error);
+                    btn.innerText = originalText;
+                    btn.disabled = false;
                 }
+            } catch (err) {
+                console.error(err);
+                alert('Something went wrong.');
+                btn.innerText = originalText;
+                btn.disabled = false;
             }
-
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                if (this.isConfetti) ctx.rotate(this.rotation * Math.PI / 180);
-                ctx.fillStyle = this.color;
-                
-                if (this.isConfetti) {
-                    ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
-                } else {
-                    ctx.beginPath();
-                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                ctx.restore();
-            }
-        }
-
-        for(let i=0; i<100; i++) particles.push(new Particle(false));
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            for (let i = particles.length - 1; i >= 0; i--) {
-                const p = particles[i];
-                p.update();
-                p.draw();
-                if (p.isConfetti && p.size < 0.5) particles.splice(i, 1);
-            }
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        function explodeConfetti() {
-            for(let i=0; i<150; i++) particles.push(new Particle(true));
-        }
-
-        function createFloatingHearts() {
-            const heart = document.createElement('div');
-            heart.classList.add('floating-heart');
-            heart.innerHTML = Math.random() > 0.5 ? '❤️' : '✨';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 5 + 's';
-            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 8000);
-        }
-
-        // --- Interaction Logic ---
-        btn.addEventListener('click', () => {
-            btn.style.transform = "scale(0)";
-            setTimeout(() => { btn.style.display = "none"; }, 400);
-
-            explodeConfetti();
-            setInterval(createFloatingHearts, 600);
-
-            msgArea.style.display = "flex";
-            playMessageSequence(0);
         });
-
-        function playMessageSequence(index) {
-            // Remove previous message if exists
-            const existingLine = textContainer.querySelector('.text-line');
-            
-            if (existingLine) {
-                // Fade out old message
-                existingLine.style.opacity = "0";
-                setTimeout(() => {
-                    existingLine.remove();
-                    // Call next message after old one is gone
-                    showNextLine(index);
-                }, 1500); // Wait 1.5s for fade out
-            } else {
-                showNextLine(index);
-            }
-        }
-
-        function showNextLine(index) {
-            if (index >= messages.length) {
-                finalHeart.style.display = "block";
-                return;
-            }
-
-            const p = document.createElement('p');
-            p.classList.add('text-line');
-            p.innerHTML = messages[index];
-            textContainer.appendChild(p);
-
-            // Force reflow
-            void p.offsetWidth;
-
-            // Fade In
-            p.style.opacity = "1";
-
-            // Schedule next cycle
-            setTimeout(() => {
-                playMessageSequence(index + 1);
-            }, delays[index]);
-        }
     </script>
+
 </body>
+
 </html>
