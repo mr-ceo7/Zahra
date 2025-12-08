@@ -1,11 +1,34 @@
 import os
-from flask import Flask, render_template
+from flask import Flask
+from blushy.models import db
+from blushy.routes import api_bp, pages_bp
 
-app = Flask(__name__)
+def create_app():
+    """Application factory"""
+    app = Flask(__name__)
+    
+    # Configuration
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+        'DATABASE_URL', 
+        'sqlite:///blushy.db'
+    )
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['JSON_SORT_KEYS'] = False
+    
+    # Initialize database
+    db.init_app(app)
+    
+    # Register blueprints
+    app.register_blueprint(api_bp)
+    app.register_blueprint(pages_bp)
+    
+    # Create tables
+    with app.app_context():
+        db.create_all()
+    
+    return app
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+app = create_app()
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))

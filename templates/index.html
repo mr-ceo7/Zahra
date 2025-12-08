@@ -3,374 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Zahra ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* --- Reset & Core --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html {
-            width: 100%; height: 100%;
-            overflow: hidden;
-            font-family: 'Poppins', sans-serif;
-            background: #0f0c29;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        /* --- Background Orbs --- */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: 0;
-            opacity: 0.6;
-            animation: floatOrb 10s infinite alternate;
-        }
-        .orb-1 { width: 300px; height: 300px; background: #ff00cc; top: -50px; left: -50px; }
-        .orb-2 { width: 400px; height: 400px; background: #3333ff; bottom: -100px; right: -100px; animation-delay: -5s; }
-
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(30px, 50px); }
-        }
-
-        /* --- Canvas for Stars & Confetti --- */
-        #canvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* --- Glass Card Container --- */
-        .glass-card {
-            position: relative;
-            z-index: 10;
-            padding: 50px 30px;
-            max-width: 650px;
-            width: 90%;
-            min-height: 400px;
-            
-            /* Glassmorphism Effect */
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 24px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: transform 0.3s ease;
-        }
-
-        /* --- Button --- */
-        #open-btn {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 20px 45px;
-            font-size: 1.6rem;
-            color: white;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            font-family: 'Dancing Script', cursive;
-            letter-spacing: 1px;
-            outline: none;
-        }
-
-        #open-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
-        }
-
-        /* --- Text Area --- */
-        #message-area {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 200px; /* Fixed height to keep layout stable */
-            position: relative;
-        }
-
-        #text-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        .text-line {
-            font-size: 1.8rem;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out; /* Smooth Fade Transition */
-            position: absolute; /* Stack on top of each other */
-            width: 100%;
-            text-align: center;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%); /* Center vertically */
-        }
-        
-        .highlight {
-            color: #ffd700;
-            font-family: 'Dancing Script', cursive;
-            font-size: 3rem;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-
-        .heart {
-            color: #ff4d6d;
-            font-size: 4rem;
-            animation: beat 1.5s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
-            display: none;
-            filter: drop-shadow(0 0 10px rgba(255, 77, 109, 0.5));
-            position: absolute;
-        }
-
-        /* --- Animations --- */
-        @keyframes beat {
-            0% { transform: scale(0.95); }
-            5% { transform: scale(1.1); }
-            39% { transform: scale(0.85); }
-            45% { transform: scale(1); }
-            60% { transform: scale(0.95); }
-            100% { transform: scale(0.9); }
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
-
-        .floating-heart {
-            position: absolute;
-            bottom: -50px;
-            font-size: 20px;
-            color: rgba(255, 150, 180, 0.8);
-            animation: floatUp 8s linear infinite;
-            z-index: 5;
-            text-shadow: 0 0 5px rgba(255,255,255,0.5);
-        }
-
-        @media (max-width: 600px) {
-            .glass-card { padding: 30px 20px; min-height: 350px; }
-            .text-line { font-size: 1.3rem; }
-            .highlight { font-size: 2.2rem; }
-        }
-    </style>
+    <meta name="description" content="Blushy - Create beautiful, animated messages and share them instantly">
+    <title>Blushy 🤭 - Create Beautiful Messages</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="logo">Blushy 🤭</h1>
+            <p class="tagline">Create beautiful, animated messages and share them instantly</p>
+        </header>
 
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <canvas id="canvas"></canvas>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Creator Panel -->
+            <section class="panel creator-panel">
+                <div class="panel-header">
+                    <span class="panel-header-icon">✨</span>
+                    <h2>Create Message</h2>
+                </div>
 
-    <div class="glass-card">
-        <button id="open-btn">A Special Message for Vee 💌</button>
+                <form id="messageForm">
+                    <!-- Message Text -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            Your Message
+                            <span class="label-hint">(Required)</span>
+                        </label>
+                        <textarea 
+                            id="messageText" 
+                            placeholder="Write something special..."
+                            required
+                            maxlength="500"
+                        ></textarea>
+                        <div class="char-counter">
+                            <span id="charCount">0/500</span>
+                            <div class="char-counter-bar">
+                                <div class="char-counter-fill" id="charFill"></div>
+                            </div>
+                        </div>
+                    </div>
 
-        <div id="message-area">
-            <div id="text-container"></div>
-            <div class="heart" id="final-heart">❤️</div>
+                    <!-- Customization Toggle -->
+                    <button type="button" class="customization-toggle" id="toggleCustomization">
+                        <span class="customization-toggle-text">
+                            ⚙️ <span>Customize (Optional)</span>
+                        </span>
+                        <span class="toggle-icon">▼</span>
+                    </button>
+
+                    <!-- Customization Options -->
+                    <div class="customization-options" id="customizationOptions">
+                        <div class="form-group">
+                            <label class="form-label">Primary Color</label>
+                            <input type="color" id="primaryColor" value="#ff6b9d">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Secondary Color</label>
+                            <input type="color" id="secondaryColor" value="#ffd60a">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Background Color</label>
+                            <input type="color" id="backgroundColor" value="#0a0e27">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Emojis</label>
+                            <input 
+                                type="text" 
+                                id="emojis" 
+                                placeholder="✨,💕,🤭"
+                                value="✨,💕,🤭"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Animation</label>
+                            <select id="transitionType">
+                                <option value="fadeIn">Fade In</option>
+                                <option value="slideInUp">Slide Up</option>
+                                <option value="slideInDown">Slide Down</option>
+                                <option value="bounce">Bounce</option>
+                                <option value="zoomIn">Zoom In</option>
+                                <option value="rotateIn">Rotate</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Duration (ms)</label>
+                            <input 
+                                type="number" 
+                                id="animationDuration" 
+                                value="2000"
+                                min="500"
+                                max="10000"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Font Style</label>
+                            <select id="fontFamily">
+                                <option value="Poppins">Poppins</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Courier New">Monospace</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Font Size (px)</label>
+                            <input 
+                                type="number" 
+                                id="fontSize" 
+                                value="48"
+                                min="12"
+                                max="200"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Background Effect</label>
+                            <select id="backgroundEffect">
+                                <option value="gradient">Gradient</option>
+                                <option value="orbs">Floating Orbs</option>
+                                <option value="particles">Particles</option>
+                                <option value="solid">Solid</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Effect Type</label>
+                            <select id="effectType">
+                                <option value="none">None</option>
+                                <option value="glow">Glow</option>
+                                <option value="blur">Blur</option>
+                                <option value="shadow">Shadow</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary" id="createBtn">
+                        Create & Share 🚀
+                    </button>
+                </form>
+            </section>
+
+            <!-- Preview Panel -->
+            <section class="panel preview-panel">
+                <div class="panel-header">
+                    <span class="panel-header-icon">👀</span>
+                    <h2>Preview</h2>
+                </div>
+                <div class="preview-container" id="previewContainer">
+                    <div class="preview-message" id="previewMessage">
+                        <p class="preview-message-empty">Your message will appear here...</p>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
 
-    <script>
-        const messages = [
-            "Hellow!, Birthday Girl 🌙",
-            "I wanted to wish you in a very unique way. 💻✨",
-            "I was panic-Googling 'Best Gifts for Vee'...",
-            "But Google just said: 'She's already perfect, good luck buddy.' 🤷‍♂️😂",
-            "So I thought about getting you a mirror...",
-            "But that seemed dangerous...",
-            "You might get lost staring at something so beautiful. 😉",
-            "Happy Birthday, <span class='highlight'>Lav</span>",
-            "May  God bless your heart as much as you bless my life.",
-            "Seriously, stop smiling at the screen, you're making me blush too.",
-            "From yours truly,",
-            "<span class='highlight'>Jeff</span>",
-            "Okay... wacha niache jokes😂",
-            "Happiest of Birthdays to the most amazing person I know! 🎉🎂",
-            "Vee I don’t know what you think you’re doing to me",
-            " but every time I see ur text",
-            "my whole mood just melts in the best way.",
-            "You’ve got this gentle kind of magic that makes me smile and...",
-            "wuehhhhhh…😂 wacha tu nisifungue roho",
-            "Just so you know…",
-            "every time you talk to me",
-            "my heart does this soft little flip",
-            "like it’s trying to impress you. ❤️‍🔥",
-            "So on your special day,",
-            "I just want to say thank you",
-            "for being you.",
-            "For being the light in my life,",
-            "the joy in my days,",
-            "and the....",
-            "waah nimekua poet😂",
-            "anyway...",
-            "Happy Birthday, Vee! 🎉🎂🎈",
-            "the end. ❤️"
-        ];
-
-        // Increased delays slightly to account for fade in/out time
-        const delays = [3000, 4000, 3500, 4500, 3500, 3000, 4500, 4000, 4000, 4500, 3000, 5000,4000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000];
-
-        const btn = document.getElementById('open-btn');
-        const msgArea = document.getElementById('message-area');
-        const textContainer = document.getElementById('text-container');
-        const finalHeart = document.getElementById('final-heart');
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-
-        // --- Particles System ---
-        let width, height, particles = [];
-        
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        class Particle {
-            constructor(isConfetti = false) {
-                this.isConfetti = isConfetti;
-                this.x = Math.random() * width;
-                this.y = isConfetti ? height + Math.random() * 100 : Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 2;
-                this.vy = isConfetti ? -(Math.random() * 10 + 5) : (Math.random() - 0.5) * 0.5;
-                this.size = isConfetti ? Math.random() * 8 + 4 : Math.random() * 2;
-                this.color = isConfetti ? `hsl(${Math.random() * 360}, 100%, 75%)` : 'rgba(255,255,255,0.8)';
-                this.gravity = isConfetti ? 0.2 : 0;
-                this.rotation = Math.random() * 360;
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                
-                if (this.isConfetti) {
-                    this.vy += this.gravity;
-                    this.rotation += 5;
-                    this.size *= 0.99;
-                } else {
-                    if (this.x < 0) this.x = width;
-                    if (this.x > width) this.x = 0;
-                    if (this.y < 0) this.y = height;
-                    if (this.y > height) this.y = 0;
-                }
-            }
-
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                if (this.isConfetti) ctx.rotate(this.rotation * Math.PI / 180);
-                ctx.fillStyle = this.color;
-                
-                if (this.isConfetti) {
-                    ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
-                } else {
-                    ctx.beginPath();
-                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                ctx.restore();
-            }
-        }
-
-        for(let i=0; i<100; i++) particles.push(new Particle(false));
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            for (let i = particles.length - 1; i >= 0; i--) {
-                const p = particles[i];
-                p.update();
-                p.draw();
-                if (p.isConfetti && p.size < 0.5) particles.splice(i, 1);
-            }
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        function explodeConfetti() {
-            for(let i=0; i<150; i++) particles.push(new Particle(true));
-        }
-
-        function createFloatingHearts() {
-            const heart = document.createElement('div');
-            heart.classList.add('floating-heart');
-            heart.innerHTML = Math.random() > 0.5 ? '❤️' : '✨';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 5 + 's';
-            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 8000);
-        }
-
-        // --- Interaction Logic ---
-        btn.addEventListener('click', () => {
-            btn.style.transform = "scale(0)";
-            setTimeout(() => { btn.style.display = "none"; }, 400);
-
-            explodeConfetti();
-            setInterval(createFloatingHearts, 600);
-
-            msgArea.style.display = "flex";
-            playMessageSequence(0);
-        });
-
-        function playMessageSequence(index) {
-            // Remove previous message if exists
-            const existingLine = textContainer.querySelector('.text-line');
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <button type="button" class="modal-close" onclick="closeModal()">✕</button>
             
-            if (existingLine) {
-                // Fade out old message
-                existingLine.style.opacity = "0";
-                setTimeout(() => {
-                    existingLine.remove();
-                    // Call next message after old one is gone
-                    showNextLine(index);
-                }, 1500); // Wait 1.5s for fade out
-            } else {
-                showNextLine(index);
-            }
-        }
+            <h2 class="modal-title">✨ Your message is ready!</h2>
+            <p class="modal-subtitle">Share this link with anyone:</p>
 
-        function showNextLine(index) {
-            if (index >= messages.length) {
-                finalHeart.style.display = "block";
-                return;
-            }
+            <!-- Share Link -->
+            <div class="share-link-box">
+                <input type="text" id="shareLink" class="share-link-input" readonly>
+                <button type="button" class="copy-btn" onclick="copyToClipboard()">📋 Copy</button>
+            </div>
 
-            const p = document.createElement('p');
-            p.classList.add('text-line');
-            p.innerHTML = messages[index];
-            textContainer.appendChild(p);
+            <!-- Social Share -->
+            <div class="social-share">
+                <p class="social-title">Share on social media:</p>
+                <div class="social-buttons">
+                    <button type="button" class="social-btn" onclick="shareOnWhatsApp()">WhatsApp</button>
+                    <button type="button" class="social-btn" onclick="shareOnTwitter()">Twitter</button>
+                    <button type="button" class="social-btn" onclick="shareOnFacebook()">Facebook</button>
+                </div>
+            </div>
 
-            // Force reflow
-            void p.offsetWidth;
+            <!-- Expiry Info -->
+            <div class="expiry-badge">
+                ⏰ Link expires in 30 days
+            </div>
+        </div>
+    </div>
 
-            // Fade In
-            p.style.opacity = "1";
+    <!-- Toast Notification -->
+    <div id="toast" style="position: fixed; bottom: 20px; right: 20px; background: var(--accent-primary); color: #000; padding: 12px 24px; border-radius: 8px; font-weight: 600; z-index: 2000; opacity: 0; transition: opacity 0.3s; pointer-events: none;"></div>
 
-            // Schedule next cycle
-            setTimeout(() => {
-                playMessageSequence(index + 1);
-            }, delays[index]);
-        }
-    </script>
+    <script src="{{ url_for('static', filename='js/creator.js') }}"></script>
 </body>
 </html>

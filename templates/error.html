@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Blushy 🤭</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .error-container {
+            padding: 40px;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .error-code {
+            font-size: 5rem;
+            margin: 20px 0;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .error-message {
+            background: rgba(255, 100, 100, 0.1);
+            border-left: 4px solid #FF6464;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #FF69B4, #FFB6D9);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: transform 0.3s ease;
+            font-weight: 600;
+        }
+
+        a:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-code">⚠️</div>
+        <h1>Oops!</h1>
+        <p>{{ error }}</p>
+        
+        {% if code == 404 %}
+            <div class="error-message">Error 404: Message not found</div>
+            <p>This message doesn't exist. It might have been deleted or the link might be incorrect.</p>
+        {% elif code == 410 %}
+            <div class="error-message">Error 410: Message Expired</div>
+            <p>This message has expired after 30 days. Ask the sender to create a new one!</p>
+        {% endif %}
+
+        <a href="/">Create a New Message</a>
+    </div>
+</body>
+</html>
